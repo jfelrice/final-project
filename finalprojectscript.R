@@ -33,12 +33,32 @@ logistic_model <- glm(diabetes_5y ~ glucose_mg_dl + pregnancy_num
 											+ age + bmi,
 											data = diabetes, family = binomial())
 #created logistic regression model
-labels(diabetes)
+library(haven)
 library(gtsummary)
+
+# Assuming 'diabetes' is your dataset
+library(gtsummary)
+
 tbl_regression(
 	logistic_model,
 	exponentiate = TRUE,
+	labels= list(
+		diabetes_5y ~ "Diabetes 5-Year",
+		glucose_mg_dl ~ "Glucose concentration (mg/dl)",
+		pregnancy_num ~ "Number of Pregnancies",
+		age ~ "Age",
+		bmi ~ "BMI")
 	)
 
 
-traceback()
+library(gtsummary)
+library(broom)
+library(broom.helpers)
+tbl_regression(
+	logistic_model,
+	exponentiate = TRUE,
+	labels=list(
+		diabetes_5y ~ "Diabetes 5-Year"))
+
+
+
