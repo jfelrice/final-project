@@ -13,8 +13,8 @@ tbl_summary(
 		all_categorical() ~ "{n} / {N} ({p}%)",
 		age ~ "{mean}"
 	),
-	label = list(
-		pregnancy_num ~ "num of Pregnancies",
+	labels = list(
+		`pregnancy_num` ~ "num of Pregnancies",
 		`glucose_mg-dl` ~ "Glucose concentration (mg/dl)",
 		`dbp_mm-hg` ~ "dose of theophylline (mm/hg)",
 		triceps_mm ~ "tricep thickness (mm)",
@@ -43,7 +43,7 @@ tbl_regression(
 	logistic_model,
 	exponentiate = TRUE,
 	labels= list(
-		diabetes_5y ~ "Diabetes 5-Year",
+		diabetes_5y ~ "Diabetes",
 		glucose_mg_dl ~ "Glucose concentration (mg/dl)",
 		pregnancy_num ~ "Number of Pregnancies",
 		age ~ "Age",
@@ -54,11 +54,12 @@ tbl_regression(
 library(gtsummary)
 library(broom)
 library(broom.helpers)
+library(gt)
 tbl_regression(
 	logistic_model,
 	exponentiate = TRUE,
 	labels=list(
-		diabetes_5y ~ "Diabetes 5-Year"))
+		diabetes_5y ~ "Diabetes"))
 
 
 
