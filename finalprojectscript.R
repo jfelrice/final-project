@@ -1,20 +1,10 @@
+
 library(gtsummary)
-tbl_summary(
-	diabetes,
-	include = everything(),
-	statistic = list(all_continuous() ~ "{mean} ({sd})",
-									 all_categorical() ~ "{n} / {N} ({p}%)"),
-	label =list(
-		pregnancy_num ~ " num of Pregnancies",
-		glucose_mg-dl ~ "Glucose concentration(mg/dl)",
-		dbp_mm-hg ~ "dose of theophylline(mm/hg)",
-		triceps_mm ~"tricep thickness(mm)",
-		insulin_microiu-ml ~ "serum insulin levels(mL)",
-		bmi ~ "BMI",
-		pedigree ~ "Pedigree score",
-		age ~ "Age (yrs)",
-		diabetes_5y ~ "Diabetes"),
-	missing_text = ("Missing"))
+library(dplyr)
+library(haven)
+# Assuming 'diabetes' is your dataset
+diabetes <- diabetes %>%
+	rename(glucose_mg_dl = `glucose_mg-dl`)
 
 tbl_summary(
 	diabetes,
@@ -37,7 +27,18 @@ tbl_summary(
 	missing_text = "Missing"
 )
 
+#made descriptive table summary
 
+logistic_model <- glm(diabetes_5y ~ glucose_mg_dl + pregnancy_num
+											+ age + bmi,
+											data = diabetes, family = binomial())
+#created logistic regression model
+labels(diabetes)
+library(gtsummary)
+tbl_regression(
+	logistic_model,
+	exponentiate = TRUE,
+	)
 
 
 traceback()
