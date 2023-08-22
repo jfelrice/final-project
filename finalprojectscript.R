@@ -8,11 +8,6 @@ diabetes <- diabetes %>%
 
 tbl_summary(
 	diabetes,
-	statistic = list(
-		all_continuous() ~ "{mean} ({sd})",
-		all_categorical() ~ "{n} / {N} ({p}%)",
-		age ~ "{mean}"
-	),
 	labels = list(
 		`pregnancy_num` ~ "num of Pregnancies",
 		`glucose_mg-dl` ~ "Glucose concentration (mg/dl)",
@@ -22,16 +17,21 @@ tbl_summary(
 		bmi ~ "BMI",
 		pedigree ~ "Pedigree score",
 		age ~ "Age (yrs)",
-		diabetes_5y ~ "Diabetes"
-	),
-	missing_text = "Missing"
-)
+		diabetes_5y ~ "Diabetes"))
+
+	statistic = list(
+		all_continuous() ~ "{mean} ({sd})",
+		all_categorical() ~ "{n} / {N} ({p}%)",
+		age ~ "{mean}"
+	)
+
+
+
 
 #made descriptive table summary
 
-logistic_model <- glm(diabetes_5y ~ glucose_mg_dl + pregnancy_num
-											+ age + bmi,
-											data = diabetes, family = binomial())
+logistic_model <- glm(diabetes_5y ~ glucose_mg_dl + pregnancy_num + age + bmi,
+										data = diabetes, family = binomial())
 #created logistic regression model
 library(haven)
 library(gtsummary)
@@ -60,6 +60,34 @@ tbl_regression(
 	exponentiate = TRUE,
 	labels=list(
 		diabetes_5y ~ "Diabetes"))
+
+library(gtsummary)
+library(broom)
+library(broom.helpers)
+library(gt)
+
+tbl_regression(
+	logistic_model,
+	exponentiate = TRUE,
+	labels = list(diabetes_5y ~ "Diabetes"),(glucose_mg_dl ~"Glucose concentration(mg/dl)"),
+		(pregnancy_num ~ "Number of Pregnancies")
+)
+
+
+tbl_regression(
+	logistic_model,
+	exponentiate = TRUE,
+	label = list(
+		glucose_mg_dl ~ "Glucose concentration (mg/dl)",
+		pregnancy_num ~ "Number of Pregnancies",
+		age ~ "Age (yrs)",
+		bmi ~ "BMI"
+	),
+
+	tidy_fun = broom.helpers::tidy_parameters	)
+
+
+
 
 
 
