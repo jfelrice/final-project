@@ -2,7 +2,7 @@
 library(gtsummary)
 library(dplyr)
 library(haven)
-# Assuming 'diabetes' is your dataset
+
 diabetes <- diabetes %>%
 	rename(glucose_mg_dl = `glucose_mg-dl`)
 
@@ -39,39 +39,6 @@ library(gtsummary)
 # Assuming 'diabetes' is your dataset
 library(gtsummary)
 
-tbl_regression(
-	logistic_model,
-	exponentiate = TRUE,
-	labels= list(
-		diabetes_5y ~ "Diabetes",
-		glucose_mg_dl ~ "Glucose concentration (mg/dl)",
-		pregnancy_num ~ "Number of Pregnancies",
-		age ~ "Age",
-		bmi ~ "BMI")
-	)
-
-
-library(gtsummary)
-library(broom)
-library(broom.helpers)
-library(gt)
-tbl_regression(
-	logistic_model,
-	exponentiate = TRUE,
-	labels=list(
-		diabetes_5y ~ "Diabetes"))
-
-library(gtsummary)
-library(broom)
-library(broom.helpers)
-library(gt)
-
-tbl_regression(
-	logistic_model,
-	exponentiate = TRUE,
-	labels = list(diabetes_5y ~ "Diabetes"),(glucose_mg_dl ~"Glucose concentration(mg/dl)"),
-		(pregnancy_num ~ "Number of Pregnancies")
-)
 
 
 tbl_regression(
