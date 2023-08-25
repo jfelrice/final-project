@@ -52,8 +52,11 @@ tbl_regression(
 	),
 
 	tidy_fun = broom.helpers::tidy_parameters	)
-
-
+?hist
+str(diabetes)
+hist(diabetes$glucose_mg_dl,
+	main = "Histogram of Glucose Concentration(mg/dl)",
+	xlab = "concentration(mg/dl)")
 
 
 
