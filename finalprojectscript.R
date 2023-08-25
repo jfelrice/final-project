@@ -4,20 +4,20 @@ library(dplyr)
 library(haven)
 
 diabetes <- diabetes %>%
-	rename(glucose_mg_dl = `glucose_mg-dl`)
+	rename(dbp_mm_hg = `dbp_mm-hg`)
 
 tbl_summary(
 	diabetes,
-	labels = list(
+	label = list(
 		`pregnancy_num` ~ "num of Pregnancies",
-		`glucose_mg-dl` ~ "Glucose concentration (mg/dl)",
-		`dbp_mm-hg` ~ "dose of theophylline (mm/hg)",
+		`glucose_mg_dl` ~ "Glucose concentration (mg/dl)",
+		`dbp_mm_hg` ~ "dose of theophylline (mm/hg)",
 		triceps_mm ~ "tricep thickness (mm)",
 		`insulin_microiu-ml` ~ "serum insulin levels (mL)",
 		bmi ~ "BMI",
 		pedigree ~ "Pedigree score",
-		age ~ "Age (yrs)",
-		diabetes_5y ~ "Diabetes"))
+		age ~ "Age (yrs)")
+	)
 
 	statistic = list(
 		all_continuous() ~ "{mean} ({sd})",
@@ -25,7 +25,7 @@ tbl_summary(
 		age ~ "{mean}"
 	)
 
-
+	tidy_fun = broom.helpers::tidy_parameters
 
 
 #made descriptive table summary
@@ -52,7 +52,6 @@ tbl_regression(
 	),
 
 	tidy_fun = broom.helpers::tidy_parameters	)
-
 
 
 
