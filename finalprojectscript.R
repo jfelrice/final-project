@@ -58,5 +58,15 @@ hist(diabetes$glucose_mg_dl,
 	main = "Histogram of Glucose Concentration(mg/dl)",
 	xlab = "concentration(mg/dl)")
 
+str(diabetes$glucose_mg_dl)
+
+rangers <- function(x){
+	max(x)-min(x)
+}
+
+x<- diabetes$glucose_mg_dl
+x<-na.omit(x)
+result<- rangers(x)
+print(result)
 
 
