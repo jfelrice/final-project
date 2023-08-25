@@ -4,7 +4,7 @@ library(dplyr)
 library(haven)
 
 diabetes <- diabetes %>%
-	rename(dbp_mm_hg = `dbp_mm-hg`)
+	rename(insulin_microiu_ml = `insulin_microiu-ml`)
 
 tbl_summary(
 	diabetes,
@@ -13,7 +13,7 @@ tbl_summary(
 		`glucose_mg_dl` ~ "Glucose concentration (mg/dl)",
 		`dbp_mm_hg` ~ "dose of theophylline (mm/hg)",
 		triceps_mm ~ "tricep thickness (mm)",
-		`insulin_microiu-ml` ~ "serum insulin levels (mL)",
+		`insulin_microiu_ml` ~ "serum insulin levels (mL)",
 		bmi ~ "BMI",
 		pedigree ~ "Pedigree score",
 		age ~ "Age (yrs)")
