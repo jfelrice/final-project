@@ -6,31 +6,48 @@ editor: visual
 
 ```{r}
 library(gtsummary)
-library(dplyr)
-library(haven)
-tbl_summary(
-	diabetes,
-	label = list(
-		`pregnancy_num` ~ "num of Pregnancies",
-		`glucose_mg_dl` ~ "Glucose concentration (mg/dl)",
-		`dbp_mm_hg` ~ "dose of theophylline (mm/hg)",
-		triceps_mm ~ "tricep thickness (mm)",
-		`insulin_microiu_ml` ~ "serum insulin levels (mL)",
-		bmi ~ "BMI",
-		pedigree ~ "Pedigree score",
-		age ~ "Age (yrs)")
-	)
-	statistic = list(
-		all_continuous() ~ "{mean} ({sd})",
-		all_categorical() ~ "{n} / {N} ({p}%)",
-		age ~ "{mean}"
-	)
-
-	tidy_fun = broom.helpers::tidy_parameters
+load(here::here("data","diabetes.rda"))
 ```
 
 ```{r}
+library(gtsummary)
+library(dplyr)
+library(haven)
 
+
+
+diabetes <- diabetes %>%
+  rename_all(~ gsub("-", "_", .))
+
+# Generate the summary table
+summary_table <- tbl_summary(
+  diabetes,
+  label = list(
+    pregnancy_num = "num of Pregnancies",
+    glucose_mg_dl = "Glucose concentration (mg/dl)",
+    dbp_mm_hg = "dose of theophylline (mm/hg)",
+    triceps_mm = "tricep thickness (mm)",
+    insulin_microiu_ml = "serum insulin levels (mL)",
+    bmi = "BMI",
+    pedigree = "Pedigree score",
+    age = "Age (yrs)")
+)
+
+# Customize summary table statistics
+statistic <- list(
+  all_continuous() ~ "{mean} ({sd})",
+  all_categorical() ~ "{n} / {N} ({p}%)",
+  age ~ "{mean}"
+)
+
+# Generate tidy parameters
+tidy_fun <- broom.helpers::tidy_parameters
+
+# Print the summary table
+summary_table
+```
+
+```{r}
 library(gtsummary)
 library(haven)
 
@@ -41,6 +58,9 @@ diabetes
 
 logistic_model <- glm(diabetes_5y ~ glucose_mg_dl + pregnancy_num + age + bmi,
 										data = diabetes, family = binomial())
+```
+
+```{r}
 #created logistic regression model
 library(haven)
 library(gtsummary)
