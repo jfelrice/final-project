@@ -95,3 +95,10 @@ print(result)
 
 ```
 
+
+```{r, message=FALSE}
+ In `@tbl-two`, there is a regression table. `@fig-hist` shows a variable for...
+
+
+```
+
