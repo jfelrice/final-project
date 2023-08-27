@@ -1,22 +1,36 @@
+---
+title: "final project version 2"
+format: html
+editor: visual
+execute: 
+  echo: false
+---
 
+```{r, message=FALSE}
 library(gtsummary)
 library(dplyr)
 library(haven)
-
+load(here::here("data","diabetes.rda"))
 diabetes <- diabetes %>%
-	rename(insulin_microiu_ml = `insulin_microiu-ml`)
+  rename_all(~ gsub("-", "_", .))
 
+library(quarto)
+```
+
+```{r, message=FALSE}
+#| label: tbl-one
+#| tbl-cap: "Descriptive statistics"
 tbl_summary(
 	diabetes,
 	label = list(
 		`pregnancy_num` ~ "num of Pregnancies",
 		`glucose_mg_dl` ~ "Glucose concentration (mg/dl)",
 		`dbp_mm_hg` ~ "dose of theophylline (mm/hg)",
-		triceps_mm ~ "tricep thickness (mm)",
+		`triceps_mm` ~ "tricep thickness (mm)",
 		`insulin_microiu_ml` ~ "serum insulin levels (mL)",
-		bmi ~ "BMI",
-		pedigree ~ "Pedigree score",
-		age ~ "Age (yrs)")
+		`bmi` ~ "BMI",
+		`pedigree` ~ "Pedigree score",
+		`age` ~ "Age (yrs)")
 	)
 
 	statistic = list(
@@ -26,8 +40,8 @@ tbl_summary(
 	)
 
 	tidy_fun = broom.helpers::tidy_parameters
-
-
+```
+```{r}
 #made descriptive table summary
 
 logistic_model <- glm(diabetes_5y ~ glucose_mg_dl + pregnancy_num + age + bmi,
@@ -39,7 +53,10 @@ library(gtsummary)
 # Assuming 'diabetes' is your dataset
 library(gtsummary)
 
-
+```
+```{r, message=FALSE}
+#| label: tbl-two
+#| tbl-cap: "Regression statistics"
 
 tbl_regression(
 	logistic_model,
@@ -54,6 +71,13 @@ tbl_regression(
 	tidy_fun = broom.helpers::tidy_parameters	)
 
 str(diabetes)
+```
+
+
+```{r, message=FALSE}
+#| label: fig-hist
+#| fig-cap: "Histogram of Glucose"
+
 hist(diabetes$glucose_mg_dl,
 	main = "Histogram of Glucose Concentration(mg/dl)",
 	xlab = "concentration(mg/dl)")
@@ -69,4 +93,5 @@ x<-na.omit(x)
 result<- rangers(x)
 print(result)
 
-getwd()
+```
+
