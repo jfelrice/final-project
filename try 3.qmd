@@ -105,3 +105,4 @@ print(result)
 ```
 
 the histogram `@fig/fig-hist` is a histogram of a variable in `@tbl-one`
+The data was sourced from a readily available cohort of a native population with a high prevalence of type 2 diabetes 
