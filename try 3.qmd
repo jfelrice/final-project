@@ -33,9 +33,9 @@ diabetes <- diabetes %>%
     pedigree ~ "Pedigree score",
     age ~ "Age (yrs)")
 )
-	tbl1
-	inline_text(tbl1, variable= "age")
-	
+tbl1
+median<- inline_text(tbl1, variable = "age")
+
 
 # Define the statistic function
 statistic = list(
@@ -76,7 +76,7 @@ tbl_regression(
 # Print the structure of the diabetes dataset
 str(diabetes)
 ```
-
+The median age was (`r median`)
 ```{r}
 #| label: fig-hist
 #| fig-cap: "Histogram of glucose concentrations"
