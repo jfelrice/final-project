@@ -18,7 +18,6 @@ diabetes <- diabetes %>%
   rename_all(~ gsub("-", "_", .))
 ```
 
-
 ```{r, message=FALSE}
 #| label: tbl-one
 #| tbl-cap: "descriptive statistics"
@@ -47,14 +46,11 @@ statistic = list(
 tidy_fun = broom.helpers::tidy_parameters
 ```
 
-
-
 ```{r}
 # Create a logistic regression model
 logistic_model <- glm(diabetes_5y ~ glucose_mg_dl + pregnancy_num + age + bmi,
                         data = diabetes, family = binomial())
 ```
-
 
 ```{r}
 #| label: tbl-two
@@ -75,14 +71,15 @@ tbl_regression(
 str(diabetes)
 ```
 
-
 ```{r}
 #| label: fig-hist
 #| fig-cap: "Histogram of glucose concentrations"
 
+
 hist(diabetes$glucose_mg_dl,
       main = "Histogram of Glucose Concentration(mg/dl)",
       xlab = "concentration(mg/dl)")
+
 
 # Print the structure of the glucose_mg_dl variable
 str(diabetes$glucose_mg_dl)
@@ -98,4 +95,4 @@ print(result)
 
 
 ```
-
+the histogram `@fig/fig-hist` is a histogram of a variable in `@tbl-one`
