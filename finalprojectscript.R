@@ -4,7 +4,7 @@ library(dplyr)
 library(haven)
 
 diabetes <- diabetes %>%
-	rename(insulin_microiu_ml = `insulin_microiu-ml`)
+	rename_all(~ gsub("-", "_", .))
 
 tbl_summary(
 	diabetes,

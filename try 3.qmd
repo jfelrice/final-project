@@ -44,7 +44,9 @@ statistic = list(
 
 # Define the tidy function
 tidy_fun = broom.helpers::tidy_parameters
+
 ```
+renv::init()
 
 ```{r}
 # Create a logistic regression model
@@ -85,14 +87,17 @@ hist(diabetes$glucose_mg_dl,
 str(diabetes$glucose_mg_dl)
 
 # Create a function to calculate the range of a variable
-rangers <- function(x){
-  max(x)-min(x)
+rangers <- function(x) {
+  max(x) - min(x)
 }
 
-# Calculate the range of the glucose_mg_dl variable
-result<- rangers(diabetes$glucose_mg_dl)
+x <- diabetes$glucose_mg_dl
+x <- na.omit(x)
+result <- rangers(x)
 print(result)
 
 
+
 ```
+
 the histogram `@fig/fig-hist` is a histogram of a variable in `@tbl-one`
