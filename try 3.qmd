@@ -19,9 +19,9 @@ diabetes <- diabetes %>%
 ```
 
 ```{r, message=FALSE}
-#| label: tbl-one
+#| label: tbl-descr
 #| tbl-cap: "descriptive statistics"
-tbl_summary(
+ tbl1<-tbl_summary(
   diabetes,
   label = list(
     `pregnancy_num` ~ "num of Pregnancies",
@@ -33,7 +33,9 @@ tbl_summary(
     pedigree ~ "Pedigree score",
     age ~ "Age (yrs)")
 )
-
+	tbl1
+	inline_text(tbl1, variable= "age")
+	
 
 # Define the statistic function
 statistic = list(
@@ -45,10 +47,12 @@ statistic = list(
 # Define the tidy function
 tidy_fun = broom.helpers::tidy_parameters
 
-```
-renv::init()
 
-```{r}
+```
+
+
+```{r, message=FALSE}
+
 # Create a logistic regression model
 logistic_model <- glm(diabetes_5y ~ glucose_mg_dl + pregnancy_num + age + bmi,
                         data = diabetes, family = binomial())
