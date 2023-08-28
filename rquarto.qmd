@@ -1,97 +1,17 @@
----
-title: "Final project quarto"
-format: html
-editor: visual
-execute: 
-  echo: false 
----
+
 
 ```{r}
-load(here::here("data","diabetes.rda"))
-
-library(quarto)
-```
-
-```{r, message=FALSE}
-
-#| label: `Tbl-one`
-
-#| tbl-cap:`"Descriptive statistics"`
-library(gtsummary)
+library(haven)
 library(dplyr)
-library(haven)
 
+#| label: fig-hist
+#| fig-cap:"Histogram of Glucose Concentration(mg/dl)"
 
-diabetes <- diabetes %>%
-  rename_all(~ gsub("-", "_", .))
-
-summary_table <- tbl_summary(
-  diabetes,
-  label = list(
-    pregnancy_num = "num of Pregnancies",
-    glucose_mg_dl = "Glucose concentration (mg/dl)",
-    dbp_mm_hg = "dose of theophylline (mm/hg)",
-    triceps_mm = "tricep thickness (mm)",
-    insulin_microiu_ml = "serum insulin levels (mL)",
-    bmi = "BMI",
-    pedigree = "Pedigree score",
-    age = "Age (yrs)")
-)
-
-# Customize summary table statistics
-statistic <- list(
-  all_continuous() ~ "{mean} ({sd})",
-  all_categorical() ~ "{n} / {N} ({p}%)",
-  age ~ "{mean}"
-)
-
-# Generate tidy parameters
-tidy_fun <- broom.helpers::tidy_parameters
-
-# Print the summary table
-summary_table
-```
-
-```{r, message=FALSE}
-library(gtsummary)
-library(haven)
-
-
-#made descriptive table summary
-
-logistic_model <- glm(diabetes_5y ~ glucose_mg_dl + pregnancy_num + age + bmi,
-										data = diabetes, family = binomial())
-```
-
-```{r, message=FALSE}
-
-library(haven)
-library(gtsummary)
-
-# Assuming 'diabetes' is your dataset
-library(gtsummary)
-
-
-tbl_regression(
-	logistic_model,
-	exponentiate = TRUE,
-	label = list(
-		glucose_mg_dl ~ "Glucose concentration (mg/dl)",
-		pregnancy_num ~ "Number of Pregnancies",
-		age ~ "Age (yrs)",
-		bmi ~ "BMI"
-	),
-	#|label:`tbl-two`
-	#| tbl-cap:`Regression model statistics`
-
-	tidy_fun = broom.helpers::tidy_parameters	)
-str(diabetes)
 
 hist(diabetes$glucose_mg_dl,
 	main = "Histogram of Glucose Concentration(mg/dl)",
 	xlab = "concentration(mg/dl)")
-#| label:`fig-one`
-#| fig-cap:`Histogram of Glucose Concentration(mg/dl)`
+
 str(diabetes$glucose_mg_dl)
 
 rangers <- function(x){
@@ -104,4 +24,7 @@ result<- rangers(x)
 print(result)
 
 
+```
+
+```         
 ```

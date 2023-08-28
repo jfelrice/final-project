@@ -1,0 +1,101 @@
+---
+title: "Quarto try 3"
+format: html
+editor: visual
+execute: 
+  echo: false
+---
+
+```{r, message=FALSE}
+library(gtsummary)
+library(dplyr)
+library(haven)
+load(here::here("data","diabetes.rda"))
+
+library(quarto)
+
+diabetes <- diabetes %>%
+  rename_all(~ gsub("-", "_", .))
+```
+
+
+```{r, message=FALSE}
+#| label: tbl-one
+#| tbl-cap: "descriptive statistics"
+tbl_summary(
+  diabetes,
+  label = list(
+    `pregnancy_num` ~ "num of Pregnancies",
+    `glucose_mg_dl` ~ "Glucose concentration (mg/dl)",
+    `dbp_mm_hg` ~ "dose of theophylline (mm/hg)",
+    triceps_mm ~ "tricep thickness (mm)",
+    `insulin_microiu_ml` ~ "serum insulin levels (mL)",
+    bmi ~ "BMI",
+    pedigree ~ "Pedigree score",
+    age ~ "Age (yrs)")
+)
+
+
+# Define the statistic function
+statistic = list(
+  all_continuous() ~ "{mean} ({sd})",
+  all_categorical() ~ "{n} / {N} ({p}%)",
+  age ~ "{mean}"
+)
+
+# Define the tidy function
+tidy_fun = broom.helpers::tidy_parameters
+```
+
+
+
+```{r}
+# Create a logistic regression model
+logistic_model <- glm(diabetes_5y ~ glucose_mg_dl + pregnancy_num + age + bmi,
+                        data = diabetes, family = binomial())
+```
+
+
+```{r}
+#| label: tbl-two
+#| tbl-cap: "regression estimates"
+tbl_regression(
+  logistic_model,
+  exponentiate = TRUE,
+  label = list(
+    glucose_mg_dl ~ "Glucose concentration (mg/dl)",
+    pregnancy_num ~ "Number of Pregnancies",
+    age ~ "Age (yrs)",
+    bmi ~ "BMI"
+  ),
+
+  tidy_fun = broom.helpers::tidy_parameters	)
+
+# Print the structure of the diabetes dataset
+str(diabetes)
+```
+
+
+```{r}
+#| label: fig-hist
+#| fig-cap: "Histogram of glucose concentrations"
+
+hist(diabetes$glucose_mg_dl,
+      main = "Histogram of Glucose Concentration(mg/dl)",
+      xlab = "concentration(mg/dl)")
+
+# Print the structure of the glucose_mg_dl variable
+str(diabetes$glucose_mg_dl)
+
+# Create a function to calculate the range of a variable
+rangers <- function(x){
+  max(x)-min(x)
+}
+
+# Calculate the range of the glucose_mg_dl variable
+result<- rangers(diabetes$glucose_mg_dl)
+print(result)
+
+
+```
+
